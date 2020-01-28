@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- your other views -->
+
+        <FrameLayout
+            android:id="@+id/viewPagerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/colorPrimary">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/dashboardButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_activity"
+                        android:padding="15dp"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/loanButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:padding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_shopping_cart_black_24dp" />
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_anchor="@id/navigation"
+            app:fabSize="normal"
+            android:fitsSystemWindows="true"
+            android:scaleType="fitXY"
+            app:maxImageSize="45dp"
+            app:tint="@android:color/white" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

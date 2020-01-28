@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Daily Book V2.0</string>
+    <string name="Add">Addd </string>
+    <string name="enter_the_deatils">Enter The Details:</string>
+    <string name="submit">Submit</string>
+    <string name="details">Details</string>
+    <string name="amount">Amount</string>
+    <string name="expenses">Expenses >></string>
+    <string name="deposit">Deposit >></string>
+    <string name="dialogueTitleLoading">"Uploading The Data To Server ......"</string>
+    <string name="dialogueDetails"> Enter The Details Of Transaction </string>
+    <string name="diaogechooser">Which Type You Want ?</string>
+</resources>

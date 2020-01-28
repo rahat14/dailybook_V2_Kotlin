@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="9dp"
+    app:cardCornerRadius="9dp"
+    android:layout_height="150dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="105dp"
+                android:id="@+id/calederView"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="5dp"
+                android:layout_centerVertical="true"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:cardCornerRadius="7dp">
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="May"
+                    android:textColor="#fff"
+                    android:padding="2dp"
+                    android:fontFamily="@font/mon_light3"
+                    android:textAlignment="center"
+                    android:background="#706592"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:textColor="#706592"
+                    android:fontFamily="@font/mon_light3"
+                    android:textAlignment="center"
+                    android:textFontWeight="200"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/mon_light3"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="#D2D3DA"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3:08 pm"
+                        android:fontFamily="@font/mon_light3"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/amountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/calederView"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="23dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#000"
+                android:textSize="37sp"
+                android:textStyle="normal"
+                android:fontFamily="@font/alata"
+                android:text="$455.08"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amountTv"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/calederView"
+            android:textSize="20sp"
+            android:fontFamily="@font/alata"
+            android:textAlignment="viewStart"
+            android:text="Reason For The Spending"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
+
+
+
+
+

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        >
+
+
+        <ru.katso.livebutton.LiveButton
+            xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/depositButton"
+            android:layout_width="250dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/deposit"
+            android:fontFamily="@font/alata"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            livebutton:backgroundColor="@color/matGreen"
+            livebutton:corners="4dp"
+            livebutton:normalHeight="6dp"
+            livebutton:pressedHeight="2dp"
+            livebutton:shadowColor="@color/matGreen" />
+
+
+        <ru.katso.livebutton.LiveButton xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/expensesButton"
+            android:layout_width="250dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:fontFamily="@font/alata"
+            android:text="@string/expenses"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            livebutton:backgroundColor="@color/matorange"
+            livebutton:corners="4dp"
+            livebutton:normalHeight="6dp"
+            livebutton:pressedHeight="2dp"
+            livebutton:shadowColor="@color/matorange" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progressBarDialouge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:visibility="gone"
+            android:layout_marginTop="-10dp"
+            android:indeterminateTint="@color/colorPrimaryDark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:id="@+id/submitPanel"
+        android:layout_marginBottom="25dp"
+        android:layout_height="wrap_content">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/details"
+                android:id="@+id/deatails"
+                android:fontFamily="@font/alata"
+                android:textColorHint="@color/colorPrimaryDark"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="4dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/amount"
+                android:id="@+id/amount"
+                android:inputType="numberSigned"
+                android:fontFamily="@font/alata"
+                android:textColorHint="@color/colorPrimaryDark" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ru.katso.livebutton.LiveButton
+            xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+            android:layout_height="56dp"
+            android:layout_width="220dp"
+            android:id="@+id/submitBtn"
+            android:fontFamily="@font/alata"
+            android:gravity="center"
+            android:text="@string/submit"
+
+            android:paddingTop="10dp"
+            android:layout_marginTop="25dp"
+            android:paddingBottom="10dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            livebutton:corners="4dp"
+            livebutton:normalHeight="6dp"
+            livebutton:pressedHeight="2dp"
+            livebutton:backgroundColor="@color/colorPrimary"
+            livebutton:shadowColor="@color/colorPrimaryDark"/>
+
+
+
+    </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
+
+</layout>
