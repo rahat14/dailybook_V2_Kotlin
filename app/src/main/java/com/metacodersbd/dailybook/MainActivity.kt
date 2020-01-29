@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     var falg  :String? =  null
     var details   :String? =  null
     var amount   :String? =  null
-    var uid : String?= "Test ID"
+    var uid : String?= "TestID"
     var dialog : MaterialDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -180,17 +180,32 @@ class MainActivity : AppCompatActivity() {
                 = HashMap<String , String> ()
         // getting time now
         val sdf = SimpleDateFormat("hh:mm dd/M/yyyy")
+        val date = SimpleDateFormat("dd")
+        val time = SimpleDateFormat("hh:mm a")
+        val mon = SimpleDateFormat("MMM")
+        val dayNameFormat = SimpleDateFormat("EEE")
+      // Getting the value from the date formats
+        val dateVIew = date.format(Date())
+        val timeView = time.format(Date())
+        val monView = mon.format(Date())
+        val  dayName = dayNameFormat.format(Date())
         val currentDate = sdf.format(Date())
 
 
         hashMap.put("amount" , amount!!)
         hashMap.put("details", details!!)
-        hashMap.put("date" , currentDate)
+        hashMap.put("full_date" , currentDate)
+        hashMap.put("time" , timeView)
+        hashMap.put("date" , dateVIew)
+        hashMap.put("day_Name",dayName)
+        hashMap.put("mon_view" , monView)
+//        Toast.makeText(this , "Time : " + timeView + "Date:" +dateVIew + " " + dayName + " Month: "+ monView , Toast.LENGTH_LONG)
+//            .show()
 
 
         mref.child(key!!).setValue(hashMap)
             .addOnCompleteListener{
-            Toast.makeText(this , "Uploaded The Amount" ,Toast.LENGTH_SHORT)
+            Toast.makeText(this , "Uploaded The Amount!!" ,Toast.LENGTH_SHORT)
                 .show()
                 // hiding the spinner
                 dialog!!.progressBarDialouge.visibility = View.GONE
@@ -200,7 +215,9 @@ class MainActivity : AppCompatActivity() {
                 dialog!!.title(R.string.dialogueDetails)
                 dialog!!.progressBarDialouge.visibility = View.GONE
             Toast.makeText(this , "Error: $it",Toast.LENGTH_SHORT)
-            .show() }
+            .show()
+
+            }
 
 
 
