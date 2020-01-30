@@ -19,6 +19,7 @@ class  dashboardFragment : Fragment()
     private  lateinit var  profileref: DatabaseReference
     var uid : String?= "Test ID"
     var testString : Double?= null
+    var totalDeposit : Double ?= null
     var depositInDouble  : Double?= null
     val dec = DecimalFormat("#,###.##")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -46,7 +47,7 @@ class  dashboardFragment : Fragment()
 
     private fun downloadTheDataOfTotal() {
         profileref = FirebaseDatabase.getInstance().getReference("users").child(uid!!).child("total")
-
+        profileref.keepSynced(true)
         // download the data
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -58,6 +59,7 @@ class  dashboardFragment : Fragment()
                 withdrawTv.text ="$" +dec.format(post?.totalWithdraw?.toDouble()).toString()
                 depositInDouble = post?.totalDeposit?.toDouble()?.minus(post.totalWithdraw?.toDouble()!!)
                 profitId.text = "$" +depositInDouble.toString()
+                totalDeposit = post?.totalDeposit?.toDouble()
                 loanTv.text ="$" + dec.format(post?.totalLoanTaken?.toDouble()).toString()
 
 
@@ -77,6 +79,12 @@ class  dashboardFragment : Fragment()
         profileref.addValueEventListener(postListener)
 
 
+    }
+
+    fun getTotalDepositValue(): Double? {
+
+
+        return totalDeposit
     }
 
 

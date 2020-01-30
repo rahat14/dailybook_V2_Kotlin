@@ -11,30 +11,39 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.metacodersbd.dailybook.R
+import com.metacodersbd.dailybook.models.modelForTotal
 import com.metacodersbd.dailybook.models.modelForTransaction
 import com.metacodersbd.dailybook.viewHolderForTransaction
+import kotlinx.android.synthetic.main.activity_dashboard_fragment.*
 import kotlinx.android.synthetic.main.custom_view.*
 import kotlinx.android.synthetic.main.expence_fragment.*
 import kotlinx.android.synthetic.main.expence_fragment.view.*
 
 class expensesListFragment : Fragment() {
     private lateinit var database: DatabaseReference
+    private lateinit var profileref: DatabaseReference
     lateinit var recyclerView : RecyclerView
     var llm : LinearLayoutManager ? =null
     var contextt : Context ? = null
+    var uid : String  = "Test ID"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
 
+
         val   view = inflater.inflate(R.layout.expence_fragment, container, false)
         contextt = this.context
-
+        database= FirebaseDatabase.getInstance().getReference("users")
+            .child(uid)
+            .child("expenceDb")
+        database.keepSynced(true)
         llm = LinearLayoutManager(contextt)
 
         recyclerView =view.findViewById(R.id.expenceList)
         recyclerView.layoutManager = llm
+        llm?.reverseLayout= true
+        llm?.stackFromEnd= true
         recyclerView.setHasFixedSize(true)
 
 
@@ -48,9 +57,6 @@ class expensesListFragment : Fragment() {
 
     private  fun loadDataFromFirebase()
     {
-        database= FirebaseDatabase.getInstance().getReference("users")
-            .child("Test ID")
-            .child("depositDb")
 
         val options = FirebaseRecyclerOptions.Builder<modelForTransaction>()
             .setQuery(database, modelForTransaction::class.java)
@@ -71,12 +77,15 @@ class expensesListFragment : Fragment() {
             position: Int,
             model: modelForTransaction
         ) {
-                holder.setData(model.amount.toString() , model.details.toString())
+                holder.setData(model.amount.toString() , model.details.toString() , model.mon_view.toString()
+                , model.day_Name.toString() , model.time.toString() , model.date.toString())
 
-                var reason = getItem(position).details
-                var amount = getItem(position).amount
+//                var reason = getItem(position).details
+//                var amount = getItem(position).amount
+
+           // monName : String , day : String , time :String , date : String
             holder.itemView.setOnClickListener{
-               Toast.makeText(context ,reason + " " +amount +" "  , Toast.LENGTH_LONG).show() ;
+              /// Toast.makeText(context ,reason + " " +amount +" "  , Toast.LENGTH_LONG).show() ;
             }
 
 
@@ -92,5 +101,7 @@ class expensesListFragment : Fragment() {
         adapters.startListening()
         recyclerView.adapter = adapters
     }
+
+
 
     }

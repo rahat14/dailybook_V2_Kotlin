@@ -33,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="May"
+                    android:id="@+id/monthNameTv"
                     android:textColor="#fff"
                     android:padding="2dp"
                     android:fontFamily="@font/mon_light3"
@@ -44,6 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="20"
+                    android:id="@+id/dateTv"
                     android:textColor="#706592"
                     android:fontFamily="@font/mon_light3"
                     android:textAlignment="center"
@@ -54,6 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mon"
+                    android:id="@+id/dayNameTv"
                     android:textAlignment="center"
                     android:textStyle="bold"
                     android:fontFamily="@font/mon_light3"
@@ -69,7 +72,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3:08 pm"
+                        android:text="3:08pm"
+                        android:id="@+id/timeTv"
                         android:fontFamily="@font/mon_light3"
                         android:textAlignment="center"
                         android:textSize="14.5sp" />

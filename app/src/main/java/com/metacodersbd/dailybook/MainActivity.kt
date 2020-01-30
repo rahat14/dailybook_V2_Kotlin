@@ -16,26 +16,27 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.metacodersbd.dailybook.databinding.ActivityMainBinding
 import com.metacodersbd.dailybook.fragments.dashboardFragment
 import com.metacodersbd.dailybook.fragments.storeFragment
+import com.metacodersbd.dailybook.models.modelForTotal
+import kotlinx.android.synthetic.main.activity_dashboard_fragment.*
 import kotlinx.android.synthetic.main.custom_view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
-
+    private  lateinit var  profileref: DatabaseReference
     var fragment: Fragment? = null
     private  lateinit var  mainActivitybinder: ActivityMainBinding
     private  lateinit var  mref:DatabaseReference
-
+    var totalDeposit : Double ?= null
     var falg  :String? =  null
     var details   :String? =  null
     var amount   :String? =  null
-    var uid : String?= "TestID"
+    var uid : String?= "Test ID"
     var dialog : MaterialDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -199,25 +200,138 @@ class MainActivity : AppCompatActivity() {
         hashMap.put("date" , dateVIew)
         hashMap.put("day_Name",dayName)
         hashMap.put("mon_view" , monView)
-//        Toast.makeText(this , "Time : " + timeView + "Date:" +dateVIew + " " + dayName + " Month: "+ monView , Toast.LENGTH_LONG)
-//            .show()
+
+            // call for the server to know the values  Text View
+
+       if(falg.equals("depositDb")){
+           profileref = FirebaseDatabase.getInstance().getReference("users").child(uid!!).child("total")
+           // download the data
+           val postListener = object : ValueEventListener {
+               override fun onDataChange(dataSnapshot: DataSnapshot) {
+                   // Get Post object and use the values to update the UI
+                   val post = dataSnapshot.getValue(modelForTotal::class.java)
+                   // get the total deposit 1st
+                   totalDeposit =(post?.totalDeposit.toString()).toDouble()
+
+                   // add them with current deposit
+                   totalDeposit = amount.toDouble()+ totalDeposit!!
+
+                   // upload the list
+                   mref.child(key!!).setValue(hashMap)
+                       .addOnCompleteListener{
+
+                           // updated  the total value
+                           profileref.child("totalDeposit").setValue(totalDeposit.toString())
+                               .addOnCompleteListener{
+
+                                   Toast.makeText(applicationContext , "Uploaded The Amount!!" ,Toast.LENGTH_SHORT)
+                                       .show()
+                                   // hiding the spinner
+                                   dialog!!.progressBarDialouge.visibility = View.GONE
+                                   // canceling the dialogue
+                                   dialog!!.cancel()
+
+                               }
+
+                       }.addOnFailureListener {
+                           dialog!!.title(R.string.dialogueDetails)
+                           dialog!!.progressBarDialouge.visibility = View.GONE
+                           Toast.makeText(applicationContext , "Error: $it",Toast.LENGTH_SHORT)
+                               .show()
+
+                       }
 
 
-        mref.child(key!!).setValue(hashMap)
-            .addOnCompleteListener{
-            Toast.makeText(this , "Uploaded The Amount!!" ,Toast.LENGTH_SHORT)
-                .show()
-                // hiding the spinner
-                dialog!!.progressBarDialouge.visibility = View.GONE
-                // canceling the dialogue
-                dialog!!.cancel()
-          }.addOnFailureListener {
-                dialog!!.title(R.string.dialogueDetails)
-                dialog!!.progressBarDialouge.visibility = View.GONE
-            Toast.makeText(this , "Error: $it",Toast.LENGTH_SHORT)
-            .show()
 
-            }
+
+
+
+
+               }
+
+               override fun onCancelled(databaseError: DatabaseError) {
+                   // Getting Post failed, log a message
+                   Toast.makeText(applicationContext, databaseError.message, Toast.LENGTH_SHORT)
+                       .show()
+                   // ...
+               }
+
+
+           }
+
+           profileref.addListenerForSingleValueEvent(postListener)
+
+
+
+
+
+
+
+       }
+        else {
+           // if flag contains  expense db
+
+           profileref = FirebaseDatabase.getInstance().getReference("users").child(uid!!).child("total")
+           // download the data
+           val postListener = object : ValueEventListener {
+               override fun onDataChange(dataSnapshot: DataSnapshot) {
+                   // Get Post object and use the values to update the UI
+                   val post = dataSnapshot.getValue(modelForTotal::class.java)
+                   // get the total deposit 1st
+                   totalDeposit =(post?.totalWithdraw.toString()).toDouble()
+
+                   // add them with current deposit
+                   totalDeposit = amount.toDouble()+ totalDeposit!!
+
+                   // upload the list
+                   mref.child(key!!).setValue(hashMap)
+                       .addOnCompleteListener{
+
+                           // updated  the total value
+                           profileref.child("totalWithdraw").setValue(totalDeposit.toString())
+                               .addOnCompleteListener{
+
+                                   Toast.makeText(applicationContext , "Uploaded The Amount!!" ,Toast.LENGTH_SHORT)
+                                       .show()
+                                   // hiding the spinner
+                                   dialog!!.progressBarDialouge.visibility = View.GONE
+                                   // canceling the dialogue
+                                   dialog!!.cancel()
+
+                               }
+
+                       }.addOnFailureListener {
+                           dialog!!.title(R.string.dialogueDetails)
+                           dialog!!.progressBarDialouge.visibility = View.GONE
+                           Toast.makeText(applicationContext , "Error: $it",Toast.LENGTH_SHORT)
+                               .show()
+
+                       }
+
+
+
+
+
+
+
+               }
+
+               override fun onCancelled(databaseError: DatabaseError) {
+                   // Getting Post failed, log a message
+                   Toast.makeText(applicationContext, databaseError.message, Toast.LENGTH_SHORT)
+                       .show()
+                   // ...
+               }
+
+
+           }
+
+           profileref.addListenerForSingleValueEvent(postListener)
+
+
+
+
+       }
 
 
 
