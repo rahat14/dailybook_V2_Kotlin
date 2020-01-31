@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.metacodersbd.dailybook.R
 import com.metacodersbd.dailybook.models.modelForTotal
@@ -27,15 +28,18 @@ class expensesListFragment : Fragment() {
     lateinit var recyclerView : RecyclerView
     var llm : LinearLayoutManager ? =null
     var contextt : Context ? = null
-    var uid : String  = "Test ID"
+    var uid : String ? = null
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
 
 
         val   view = inflater.inflate(R.layout.expence_fragment, container, false)
         contextt = this.context
+        firebaseAuth  = FirebaseAuth.getInstance()
+        uid  = firebaseAuth.uid
         database= FirebaseDatabase.getInstance().getReference("users")
-            .child(uid)
+            .child(uid!!)
             .child("expenceDb")
         database.keepSynced(true)
         llm = LinearLayoutManager(contextt)

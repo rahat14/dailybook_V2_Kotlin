@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.metacodersbd.dailybook.R
@@ -22,14 +23,16 @@ class earnedFragment : Fragment() {
     lateinit var recyclerView : RecyclerView
     var llm : LinearLayoutManager? =null
     var contextt : Context? = null
-    var uid:String ="Test ID"
+    var uid:String ?=null
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
 
         val   view = inflater.inflate(R.layout.earning_fragment, container, false)
 
         contextt = this.context
-
+        firebaseAuth  = FirebaseAuth.getInstance()
+        uid = firebaseAuth.uid
         llm = LinearLayoutManager(contextt)
         llm?.reverseLayout= true
         llm?.stackFromEnd= true
@@ -49,7 +52,7 @@ class earnedFragment : Fragment() {
     private  fun loadDataFromFirebase()
     {
         database= FirebaseDatabase.getInstance().getReference("users")
-            .child(uid)
+            .child(uid!!)
             .child("depositDb")
         database.keepSynced(true)
 

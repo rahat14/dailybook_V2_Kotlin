@@ -3,6 +3,7 @@ package com.metacodersbd.dailybook
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -11,16 +12,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.*
+import com.metacodersbd.dailybook.models.modelForTotal
 import kotlinx.android.synthetic.main.activity_login.*
 
 class loginActivity : AppCompatActivity() {
     val RC_SIGN_IN: Int = 1
+    var uid: String ?= null
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_login)
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -38,7 +44,9 @@ class loginActivity : AppCompatActivity() {
 
     private fun setupUI() {
         google_button.setOnClickListener {
+
             signIn()
+            progressBar?.visibility = View.VISIBLE
         }
     }
 
@@ -57,9 +65,11 @@ class loginActivity : AppCompatActivity() {
                     firebaseAuthWithGoogle(account)
                 }
                 else {
+                    progressBar?.visibility = View.INVISIBLE
                     Toast.makeText(this, "Google sign in Acc null:(", Toast.LENGTH_LONG).show()
                 }
             } catch (e: ApiException) {
+                progressBar?.visibility = View.INVISIBLE
                 Toast.makeText(this, "Google sign in failed:(" + e.message, Toast.LENGTH_LONG).show()
             }
         }
@@ -69,16 +79,83 @@ class loginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-
-               val intent = Intent(applicationContext , MainActivity::class.java)
-                startActivity(intent)
+               // progressBar?.visibility = View.INVISIBLE
+              // val intent = Intent(applicationContext , MainActivity::class.java)
+                //startActivity(intent)
+                checkifUserExits()
 
             } else {
+                progressBar?.visibility = View.INVISIBLE
                 Toast.makeText(this, "Google sign in failed:(" + it.exception.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
 
+    private fun checkifUserExits() {
+        uid = firebaseAuth.uid
 
+
+        var mref : DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+            .child(uid!!)
+
+       var listener  = object  : ValueEventListener {
+           override fun onCancelled(p0: DatabaseError) {
+
+
+                  }
+
+           override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+               if(dataSnapshot.exists())
+               {
+                   progressBar?.visibility  = View.INVISIBLE
+                    val intent = Intent(applicationContext , MainActivity::class.java)
+                   startActivity(intent)
+               }
+               else {
+                  // progressBar?.visibility  = View.INVISIBLE
+
+                   var model = modelForTotal("0", "0","0", "0")
+
+                    mref.child("total").setValue(model).addOnCompleteListener{
+                        if(it.isSuccessful)
+                        {
+                            progressBar?.visibility  = View.INVISIBLE
+                             val intent = Intent(applicationContext , MainActivity::class.java)
+                            startActivity(intent)
+
+                        }
+                        else {
+                            progressBar?.visibility  = View.INVISIBLE
+
+                            Toast.makeText(applicationContext, it.exception.toString(), Toast.LENGTH_LONG).show()
+
+                        }
+                    }
+               }
+
+
+           }
+
+
+       }
+
+        mref.addListenerForSingleValueEvent(listener)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        var firbaseuser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+
+        if(!firbaseuser.equals(null)){
+            val intent = Intent(applicationContext , MainActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
+    }
 }
+
 

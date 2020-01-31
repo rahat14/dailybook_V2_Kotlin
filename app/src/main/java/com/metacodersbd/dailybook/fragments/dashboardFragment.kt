@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.metacodersbd.dailybook.R
 import com.metacodersbd.dailybook.adapter.viewPagerAdapter
@@ -17,7 +18,8 @@ import java.text.DecimalFormat
 class  dashboardFragment : Fragment()
 {
     private  lateinit var  profileref: DatabaseReference
-    var uid : String?= "Test ID"
+    var uid : String?= null
+    private lateinit var firebaseAuth: FirebaseAuth
     var testString : Double?= null
     var totalDeposit : Double ?= null
     var depositInDouble  : Double?= null
@@ -26,11 +28,13 @@ class  dashboardFragment : Fragment()
     {
 
         val   view = inflater.inflate(R.layout.activity_dashboard_fragment, container, false)
-
+        firebaseAuth  = FirebaseAuth.getInstance()
+        uid = firebaseAuth.uid
         //set up the viewpager and load them
         val adapter  = viewPagerAdapter(this.childFragmentManager)
-        adapter.addFrament(expensesListFragment() , "Expenses")
-        adapter.addFrament(earnedFragment() , "Earning")
+        adapter.addFrament(earnedFragment() , "Deposit")
+        adapter.addFrament(expensesListFragment() , "Expense")
+
 
         view.viewPagerID.adapter = adapter
         view.TablaoutId.setupWithViewPager(view.viewPagerID)

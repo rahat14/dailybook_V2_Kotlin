@@ -4,8 +4,10 @@ package com.metacodersbd.dailybook
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.DialogBehavior
@@ -50,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             fragment = dashboardFragment()
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.viewPagerContainer, dashboardFragment(), "dashboard")
-            transaction.addToBackStack(null)
             transaction.commit()
 
 
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         mainActivitybinder.dashboardButton.setOnClickListener {
                 val transactionn = supportFragmentManager.beginTransaction()
                 transactionn.replace(R.id.viewPagerContainer, dashboardFragment(), "dashboard")
-                transactionn.addToBackStack(null)
+
                 transactionn.commit()
 
 
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
             val transactionb  = supportFragmentManager.beginTransaction()
             transactionb.replace(R.id.viewPagerContainer ,storeFragment()  , "store")
-            transactionb.addToBackStack(null)
+
             transactionb.commit()
 
 
@@ -338,7 +339,39 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        val builder = AlertDialog.Builder(this@MainActivity)
+//
+//        builder.setTitle("Test")
+//
+//        // Finally, make the alert dialog using builder
+//        val dialog: AlertDialog = builder.create()
+//
+//        // Display the alert dialog on app interface
+//        dialog.show()
+//    }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
+        val builder = AlertDialog.Builder(this@MainActivity)
 
+        builder.setTitle("Alert!")
+        builder.setMessage("Do You Want Exit This APP ? ")
+        builder.setPositiveButton("Yes"){
+            dialog, which ->  finish()
+        }
+        builder.setNegativeButton("No"){
+            dialog, which ->
+            dialog.dismiss()
+        }
+
+        // Finally, make the alert dialog using builder
+        val dialog: AlertDialog = builder.create()
+
+        // Display the alert dialog on app interface
+        dialog.show()
+        dialog.setCancelable(false)
+        return true
+    }
 }
