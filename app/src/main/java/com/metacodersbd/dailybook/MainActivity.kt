@@ -1,6 +1,7 @@
 package com.metacodersbd.dailybook
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -18,6 +19,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.metacodersbd.dailybook.databinding.ActivityMainBinding
 import com.metacodersbd.dailybook.fragments.dashboardFragment
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     var falg  :String? =  null
     var details   :String? =  null
     var amount   :String? =  null
-    var uid : String?= "Test ID"
+    var uid : String?= ""
     var dialog : MaterialDialog ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         mainActivitybinder = DataBindingUtil.setContentView(this ,R.layout.activity_main)
             // TODO uid need to init
-
+            uid =FirebaseAuth.getInstance().uid
 
 
             fragment = dashboardFragment()
@@ -75,10 +77,13 @@ class MainActivity : AppCompatActivity() {
 
         mainActivitybinder.loanButton.setOnClickListener{
 
-            val transactionb  = supportFragmentManager.beginTransaction()
-            transactionb.replace(R.id.viewPagerContainer ,storeFragment()  , "store")
+//            val transactionb  = supportFragmentManager.beginTransaction()
+//            transactionb.replace(R.id.viewPagerContainer ,storeFragment()  , "store")
+//
+//            transactionb.commit()
 
-            transactionb.commit()
+            val intent = Intent(applicationContext , SearchActivity::class.java)
+            startActivity(intent)
 
 
 
@@ -181,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                  val hashMap : HashMap<String , String>
                 = HashMap<String , String> ()
         // getting time now
-        val sdf = SimpleDateFormat("hh:mm dd/M/yyyy")
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm")
         val date = SimpleDateFormat("dd")
         val time = SimpleDateFormat("hh:mm a")
         val mon = SimpleDateFormat("MMM")

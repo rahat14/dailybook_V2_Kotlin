@@ -52,5 +52,7 @@ dependencies {
     implementation 'com.github.dakatso:livebutton:1.0.0'
     //play service auth
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    implementation 'com.github.renaudcerrato:FloatingSearchView:1.0.1'
 
 }
