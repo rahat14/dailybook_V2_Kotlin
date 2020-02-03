@@ -4,7 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+
 import android.widget.Toast
+import com.crashlytics.android.Crashlytics
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,6 +17,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+
 import com.google.firebase.database.*
 import com.metacodersbd.dailybook.models.modelForTotal
 import kotlinx.android.synthetic.main.activity_login.*
@@ -43,6 +47,7 @@ class loginActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+       // Crashlytics.getInstance().crash()
         google_button.setOnClickListener {
 
             signIn()
@@ -147,9 +152,10 @@ class loginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        var firbaseuser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 
-        if(!firbaseuser.equals(null)){
+        var firbaseuser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
+        if(firbaseuser != null ){
             val intent = Intent(applicationContext , MainActivity::class.java)
             startActivity(intent)
             finish()

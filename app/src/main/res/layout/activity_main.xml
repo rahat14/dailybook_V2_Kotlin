@@ -62,7 +62,7 @@
                         android:padding="10dp"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/ic_shopping_cart_black_24dp" />
+                        android:src="@drawable/ic_search_white_24dp" />
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

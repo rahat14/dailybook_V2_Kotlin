@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ class expensesListFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var profileref: DatabaseReference
     lateinit var recyclerView : RecyclerView
+    lateinit var  pbar : ProgressBar
     var llm : LinearLayoutManager ? =null
     var contextt : Context ? = null
     var uid : String ? = null
@@ -45,11 +47,12 @@ class expensesListFragment : Fragment() {
         llm = LinearLayoutManager(contextt)
 
         recyclerView =view.findViewById(R.id.expenceList)
+        pbar = view.findViewById(R.id.progressBar)
         recyclerView.layoutManager = llm
         llm?.reverseLayout= true
         llm?.stackFromEnd= true
         recyclerView.setHasFixedSize(true)
-
+        pbar.visibility = View.VISIBLE
 
         //expenceList
 
@@ -81,6 +84,7 @@ class expensesListFragment : Fragment() {
             position: Int,
             model: modelForTransaction
         ) {
+                pbar.visibility = View.INVISIBLE
                 holder.setData(model.amount.toString() , model.details.toString() , model.mon_view.toString()
                 , model.day_Name.toString() , model.time.toString() , model.date.toString())
 

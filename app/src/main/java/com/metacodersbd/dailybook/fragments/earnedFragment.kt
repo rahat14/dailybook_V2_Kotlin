@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +17,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.metacodersbd.dailybook.R
 import com.metacodersbd.dailybook.models.modelForTransaction
 import com.metacodersbd.dailybook.viewHolderForTransaction
+import kotlinx.android.synthetic.main.earning_fragment.*
 
 class earnedFragment : Fragment() {
 
     private lateinit var database: DatabaseReference
     lateinit var recyclerView : RecyclerView
+    lateinit var  pbar : ProgressBar
     var llm : LinearLayoutManager? =null
     var contextt : Context? = null
     var uid:String ?=null
@@ -37,10 +40,11 @@ class earnedFragment : Fragment() {
         llm?.reverseLayout= true
         llm?.stackFromEnd= true
         recyclerView =view.findViewById(R.id.depositList)
+        pbar = view.findViewById(R.id.progressInDeposit)
         recyclerView.layoutManager = llm
         recyclerView.setHasFixedSize(true)
 
-
+        pbar.visibility = View.VISIBLE
         //expenceList
 
 
@@ -75,6 +79,7 @@ class earnedFragment : Fragment() {
                 position: Int,
                 model: modelForTransaction
             ) {
+                pbar.visibility = View.INVISIBLE
                 holder.setData(model.amount.toString() , model.details.toString() , model.mon_view.toString()
                     , model.day_Name.toString() , model.time.toString() , model.date.toString())
 

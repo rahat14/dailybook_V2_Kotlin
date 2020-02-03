@@ -15,8 +15,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".searchJava"></activity>
-        <activity android:name=".searchInJava" />
-        <activity android:name=".SearchActivity" />
+
+        <activity android:name=".SearchActivity" >
+
+        </activity>
         <activity android:name=".loginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
